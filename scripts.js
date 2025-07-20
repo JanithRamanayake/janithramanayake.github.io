@@ -1,4 +1,5 @@
 
+
 // Mobile Navigation
 const hamburger = document.querySelector('.hamburger');
 const navMenu = document.querySelector('.nav-menu');
@@ -7,6 +8,8 @@ hamburger.addEventListener('click', () => {
     hamburger.classList.toggle('active');
     navMenu.classList.toggle('active');
 });
+
+
 
 // Close mobile menu when clicking on a link
 document.querySelectorAll('.nav-link').forEach(n => n.addEventListener('click', () => {
@@ -28,6 +31,10 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
+
+
+
+
 // Navbar scroll effect
 window.addEventListener('scroll', () => {
     const navbar = document.querySelector('.navbar');
@@ -41,6 +48,9 @@ window.addEventListener('scroll', () => {
         navbar.style.boxShadow = 'none';
     }
 });
+
+
+
 
 // Active navigation link highlighting
 const sections = document.querySelectorAll('section[id]');
@@ -63,6 +73,8 @@ window.addEventListener('scroll', () => {
         }
     });
 });
+
+
 
 // Scroll animations
 const observerOptions = {
@@ -279,5 +291,33 @@ particlesJS('particles-js', {
 });
 
 
+// Handle SPA-style routing
+document.querySelectorAll('a.nav-link[data-page]').forEach(link => {
+  link.addEventListener('click', function (e) {
+    e.preventDefault();
+    const pageUrl = this.getAttribute('data-page');
+    const path = this.getAttribute('href');
+    history.pushState({}, '', path);
+
+    fetch(pageUrl)
+      .then(res => res.text())
+      .then(html => {
+        document.body.innerHTML = html;
+        window.scrollTo(0, 0);
+      });
+  });
+});
+
+window.addEventListener('popstate', () => {
+  const path = window.location.pathname;
+  if (path === '/blog') {
+    fetch('blog.html')
+      .then(res => res.text())
+      .then(html => {
+        document.body.innerHTML = html;
+        window.scrollTo(0, 0);
+      });
+  }
+});
 
 
