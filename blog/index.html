@@ -6,6 +6,65 @@
   <title>Blog - Janith Ramanayake</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../styles.css">
+  <style>
+    body {
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      font-family: 'Inter', sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 4rem 2rem;
+    }
+    .blog-header {
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+    .blog-header h1 {
+      font-size: 3rem;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .blog-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+    .blog-card {
+      background: var(--bg-card);
+      padding: 2rem;
+      border-radius: 20px;
+      border: 1px solid var(--border-color);
+      transition: 0.3s;
+    }
+    .blog-card:hover {
+      transform: translateY(-5px);
+      border-color: var(--primary-color);
+    }
+    .blog-card h3 {
+      font-size: 1.5rem;
+      margin: 1rem 0;
+      color: var(--text-primary);
+    }
+    .blog-card p {
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+    .blog-card a {
+      text-decoration: none;
+      color: var(--primary-color);
+      font-weight: 600;
+      display: inline-block;
+      margin-top: 1rem;
+    }
+    .blog-card a:hover {
+      color: var(--accent-color);
+    }
+  </style>
   
 </head>
 <body>
