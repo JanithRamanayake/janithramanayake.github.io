@@ -1,0 +1,251 @@
+:root {
+  --primary-color: #667eea;
+  --secondary-color: #764ba2;
+  --accent-color: #f093fb;
+  --bg-primary: #0a0a0a;
+  --bg-secondary: #1a1a1a;
+  --bg-card: #151515;
+  --text-primary: #ffffff;
+  --text-secondary: #a0a0a0;
+  --text-muted: #666666;
+  --border-color: #333333;
+  --gradient: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  --gradient-hover: linear-gradient(135deg, var(--secondary-color), var(--accent-color));
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 80px;
+}
+
+body {
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: 'Inter', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* Navigation */
+.navbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  padding: 1rem 0;
+  z-index: 1000;
+
+  background: rgba(15, 15, 15, 0.5); /* Semi-transparent */
+  backdrop-filter: blur(16px);      /* Real blur effect */
+  -webkit-backdrop-filter: blur(16px); /* Safari support */
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Optional border */
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);         /* Soft shadow */
+  transition: all 0.3s ease;
+}
+
+.nav-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav-logo a {
+  font-size: 1.5rem;
+  font-weight: 700;
+  background: var(--gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-decoration: none;
+}
+
+.nav-menu {
+  display: flex;
+  list-style: none;
+  gap: 2rem;
+}
+
+.nav-link {
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.nav-link:hover {
+  color: var(--text-primary);
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--gradient);
+  transition: width 0.3s ease;
+}
+
+.nav-link:hover::after {
+  width: 100%;
+}
+
+.hamburger {
+  display: none;
+  flex-direction: column;
+  cursor: pointer;
+  gap: 4px;
+}
+
+.bar {
+  width: 25px;
+  height: 3px;
+  background: var(--text-primary);
+  transition: 0.3s;
+}
+
+
+/* Sections */
+.section {
+  padding: 6rem 0;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.section-title {
+  font-size: 3rem;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 4rem;
+  background: var(--gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.education h3 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: var(--text-primary);
+}
+
+.education-item {
+  margin-bottom: 2rem;
+}
+
+.education-item h4 {
+  font-size: 1.2rem;
+  color: var(--primary-color);
+  margin-bottom: 0.5rem;
+}
+
+.education-item p {
+  color: var(--text-secondary);
+}
+
+/* Skills Tree - New Design */
+.skills-tree {
+  position: relative;
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 4rem 2rem;
+}
+
+.skills-root {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.root-node {
+  width: 100%;
+  display: inline-block;
+  background: var(--gradient);
+  color: white;
+  padding: 1rem 2rem;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 1.2rem;
+  border: 2px solid var(--primary-color);
+}
+
+
+
+.skills-branches {
+  display: flex;
+  justify-content: space-between;
+  gap: 4rem;
+  position: relative;
+}
+
+.skill-branch {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.skill-branch.left {
+  align-items: flex-end;
+}
+
+.skill-branch.right {
+  align-items: flex-start;
+}
+
+.skill-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  max-width: 300px;
+}
+
+.skill-branch.left .skill-group {
+  justify-content: flex-end;
+}
+
+.skill-branch.right .skill-group {
+  justify-content: flex-start;
+}
+
+.skill-item {
+  display: flex;
+  position: relative;
+  align-items: center; 
+  justify-content: center;
+  text-align: center;
+  width: 200px;
+  height: 40px;
+  background: var(--bg-card);
+  color: var(--text-secondary);
+  padding: 0.3rem 0.3rem;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  font-size: 0.8rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.long-subject{
+  font-size: 0.7rem;
+  padding-top: 0.2rem;
+
+}
+
+
+
+
