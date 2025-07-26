@@ -1029,8 +1029,8 @@ body {
 /* Animations */
 .fade-in {
   opacity: 0;
-  transform: translateY(30px);
-  transition: all 0.6s ease;
+  transform: translateY(40px);
+  transition: opacity 0.5s ease, transform 0.7s ease;
 }
 
 .fade-in.visible {
@@ -1058,6 +1058,194 @@ body {
 .slide-in-right.visible {
   opacity: 1;
   transform: translateX(0);
+}
+
+/* Add more modern animations */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes glow {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(102, 126, 234, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(102, 126, 234, 0.4);
+  }
+}
+
+@keyframes bounceIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.3);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+  70% {
+    transform: scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes slideInFromTop {
+  0% {
+    opacity: 0;
+    transform: translateY(-100px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scaleIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Hero text animations */
+.hero-greeting {
+  animation: slideInFromTop 1s ease-out 0.2s both;
+}
+
+.hero-name {
+  animation: slideInFromTop 1s ease-out 0.4s both;
+}
+
+.hero-subtitle {
+  animation: slideInFromTop 1s ease-out 0.6s both;
+}
+
+.hero-description {
+  animation: slideInFromTop 1s ease-out 0.8s both;
+}
+
+.hero-buttons {
+  animation: slideInFromTop 1s ease-out 1s both;
+}
+
+/* Project cards animation */
+.project-card {
+  animation: float 6s ease-in-out infinite;
+}
+
+.project-card:nth-child(2) {
+  animation-delay: -2s;
+}
+
+.project-card:nth-child(3) {
+  animation-delay: -4s;
+}
+
+/* Skill logos animation */
+.skill-logo {
+  animation: bounceIn 0.6s ease-out both;
+}
+
+.skill-logo:nth-child(1) { animation-delay: 0.1s; }
+.skill-logo:nth-child(2) { animation-delay: 0.2s; }
+.skill-logo:nth-child(3) { animation-delay: 0.3s; }
+.skill-logo:nth-child(4) { animation-delay: 0.4s; }
+.skill-logo:nth-child(5) { animation-delay: 0.5s; }
+.skill-logo:nth-child(6) { animation-delay: 0.6s; }
+
+/* Navigation enhancement */
+.nav-link.active {
+  color: var(--primary-color);
+  position: relative;
+}
+
+.nav-link.active::after {
+  width: 100%;
+}
+
+/* Button enhancements */
+.btn {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.btn:hover::before {
+  left: 100%;
+}
+
+/* Section title enhancement */
+.section-title {
+  position: relative;
+}
+
+.section-title::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 4px;
+  background: var(--gradient);
+  border-radius: 2px;
+}
+
+/* Enhanced card shadows */
+.project-card,
+.blog-card,
+.timeline-content,
+.contact-form {
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+}
+
+/* Scroll progress indicator */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 0%;
+  height: 3px;
+  background: var(--gradient);
+  z-index: 9999;
+  transition: width 0.1s ease;
+}
+
+/* Typing animation for hero text */
+.typing-animation {
+  border-right: 2px solid var(--primary-color);
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  0%, 50% {
+    border-color: var(--primary-color);
+  }
+  51%, 100% {
+    border-color: transparent;
+  }
 }
 
 

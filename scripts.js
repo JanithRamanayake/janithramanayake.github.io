@@ -207,6 +207,15 @@ window.addEventListener('hashchange', setActiveNavItem);
 // Add loading animation
 document.addEventListener('DOMContentLoaded', () => {
     document.body.classList.add('loaded');
+    
+    // Initialize scroll progress indicator
+    createScrollProgressIndicator();
+    
+    // Initialize typing animation
+    initializeTypingAnimation();
+    
+    // Initialize interactive elements
+    initializeInteractiveElements();
 });
 
 // Add CSS for loading animation
