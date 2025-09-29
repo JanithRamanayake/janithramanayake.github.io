@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Understanding Transformer Architectures - Janith Ramanayake</title>
+    <link rel="stylesheet" href="../../styles.css">
+    <style>
+        .post-hero {
+            background: linear-gradient(135deg, #2C3E50 0%, #3498DB 100%);
+            padding: 120px 0 40px;
+            color: white;
+        }
+
+        .post-hero-content {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .post-meta-top {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+        }
+
+        .post-category-badge {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 8px 15px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        .post-hero h1 {
+            font-size: 2.8rem;
+            line-height: 1.2;
+            margin-bottom: 20px;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .post-meta-info {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+            font-size: 0.95rem;
+            color: #E8F4FD;
+        }
+
+        .post-meta-info span {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .post-content-wrapper {
+            padding: 60px 0;
+            background: #FFFFFF;
+        }
+
+        .post-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .post-featured-image {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 30px rgba(44, 62, 80, 0.15);
+        }
+
+        .post-content {
+            color: #2C3E50;
+            line-height: 1.8;
+            font-size: 1.1rem;
+        }
+
+        .post-content h2 {
+            color: #2C3E50;
+            font-size: 2rem;
+            margin: 40px 0 20px;
+            font-weight: 600;
+        }
+
+        .post-content h3 {
+            color: #2C3E50;
+            font-size: 1.5rem;
+            margin: 30px 0 15px;
+            font-weight: 600;
+        }
+
+        .post-content p {
+            margin-bottom: 20px;
+            color: #495057;
+        }
+
+        .post-content ul, .post-content ol {
+            margin: 20px 0 20px 30px;
+            color: #495057;
+        }
+
+        .post-content li {
+            margin-bottom: 10px;
+        }
+
+        .post-content blockquote {
+            background: #F8F9FA;
+            border-left: 4px solid #3498DB;
+            padding: 20px 30px;
+            margin: 30px 0;
+            font-style: italic;
+            color: #6C757D;
+        }
+
+        .post-content code {
+            background: #F8F9FA;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            color: #E74C3C;
+            font-size: 0.95em;
+        }
+
+        .post-content pre {
+            background: #2C3E50;
+            color: #FFFFFF;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 20px 0;
+        }
+
+        .post-content pre code {
+            background: transparent;
+            color: #FFFFFF;
+            padding: 0;
+        }
+
+        .post-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 40px 0;
+            padding: 30px 0;
+            border-top: 2px solid #E9ECEF;
+            border-bottom: 2px solid #E9ECEF;
+        }
+
+        .post-tag {
+            background: #E3F2FD;
+            color: #3498DB;
+            padding: 8px 15px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .post-tag:hover {
+            background: #3498DB;
+            color: white;
+        }
+
+        .post-author {
+            background: #F8F9FA;
+            padding: 30px;
+            border-radius: 10px;
+            display: flex;
+            gap: 25px;
+            margin: 40px 0;
+        }
+
+        .author-image {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            flex-shrink: 0;
+        }
+
+        .author-info h3 {
+            color: #2C3E50;
+            margin-bottom: 10px;
+            font-size: 1.3rem;
+        }
+
+        .author-info p {
+            color: #6C757D;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .author-social {
+            display: flex;
+            gap: 15px;
+        }
+
+        .author-social a {
+            color: #3498DB;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .author-social a:hover {
+            color: #2980B9;
+        }
+
+        .related-posts {
+            margin-top: 60px;
+        }
+
+        .related-posts h2 {
+            color: #2C3E50;
+            font-size: 2rem;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .related-posts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .related-post-card {
+            background: #FFFFFF;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(44, 62, 80, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .related-post-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .related-post-image {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+        }
+
+        .related-post-content {
+            padding: 20px;
+        }
+
+        .related-post-content h3 {
+            color: #2C3E50;
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+        }
+
+        .related-post-content a {
+            color: #2C3E50;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .related-post-content a:hover {
+            color: #3498DB;
+        }
+
+        .related-post-meta {
+            color: #6C757D;
+            font-size: 0.9rem;
+        }
+
+        .back-to-blog {
+            display: inline-block;
+            margin-bottom: 30px;
+            color: #3498DB;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .back-to-blog:hover {
+            color: #2980B9;
+        }
+
+        .back-to-blog::before {
+            content: '← ';
+        }
+
+        @media screen and (max-width: 768px) {
+            .post-hero h1 {
+                font-size: 2rem;
+            }
+
+            .post-featured-image {
+                height: 250px;
+            }
+
+            .post-content {
+                font-size: 1rem;
+            }
+
+            .post-author {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .author-image {
+                margin: 0 auto;
+            }
+
+            .author-social {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <h2>Janith Ramanayake</h2>
+            </div>
+            <ul class="nav-menu" id="nav-menu">
+                <li class="nav-item">
+                    <a href="index.html#about" class="nav-link">About</a>
+                </li>
+                <li class="nav-item">
+                    <a href="index.html#research" class="nav-link">Research</a>
+                </li>
+                <li class="nav-item">
+                    <a href="index.html#publications" class="nav-link">Publications</a>
+                </li>
+                <li class="nav-item">
+                    <a href="index.html#projects" class="nav-link">Projects</a>
+                </li>
+                <li class="nav-item">
+                    <a href="blog.html" class="nav-link">Blog</a>
+                </li>
+                <li class="nav-item">
+                    <a href="index.html#contact" class="nav-link">Contact</a>
+                </li>
+            </ul>
+            <div class="hamburger" id="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Post Hero -->
+    <section class="post-hero">
+        <div class="post-hero-content">
+            <div class="post-meta-top">
+                <span class="post-category-badge">Machine Learning</span>
+                <span>•</span>
+                <span>8 min read</span>
+            </div>
+            <h1>Understanding Transformer Architectures: A Deep Dive</h1>
+            <div class="post-meta-info">
+                <span>📅 September 28, 2025</span>
+                <span>👤 Janith Ramanayake</span>
+                <span>💬 12 Comments</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Post Content -->
+    <section class="post-content-wrapper">
+        <div class="post-container">
+            <a href="blog.html" class="back-to-blog">Back to Blog</a>
+
+            <img src="assets/blog1.jpg" alt="Transformer Architecture" class="post-featured-image">
+
+            <article class="post-content">
+                <p>
+                    The introduction of the Transformer architecture in the landmark 2017 paper "Attention is All You Need" 
+                    by Vaswani et al. fundamentally changed the landscape of natural language processing and has since influenced 
+                    numerous domains in artificial intelligence. In this comprehensive guide, we'll explore the core components 
+                    of transformers and understand why they've become the foundation for modern language models like GPT, BERT, 
+                    and their successors.
+                </p>
+
+                <h2>The Attention Mechanism: The Heart of Transformers</h2>
+
+                <p>
+                    At the core of the transformer architecture lies the attention mechanism, specifically what's known as 
+                    "self-attention" or "scaled dot-product attention." This mechanism allows the model to weigh the importance 
+                    of different words in a sequence when processing each word, enabling it to capture complex dependencies 
+                    regardless of their distance in the sequence.
+                </p>
+
+                <blockquote>
+                    "Attention mechanisms allow neural networks to focus on specific parts of their input, much like how 
+                    humans pay attention to relevant information while filtering out noise."
+                </blockquote>
+
+                <h3>How Self-Attention Works</h3>
+
+                <p>
+                    The self-attention mechanism operates through three learned linear projections of the input: Query (Q), 
+                    Key (K), and Value (V). For each position in the sequence, we compute:
+                </p>
+
+                <pre><code>Attention(Q, K, V) = softmax(QK^T / √d_k)V</code></pre>
+
+                <p>
+                    This elegant formula encapsulates the entire attention computation. The queries and keys are multiplied 
+                    to determine attention weights, scaled by the square root of the dimension, passed through softmax for 
+                    normalization, and finally used to weight the values.
+                </p>
+
+                <h2>Multi-Head Attention: Seeing Multiple Perspectives</h2>
+
+                <p>
+                    Rather than computing attention once, transformers use multi-head attention, which runs the attention 
+                    mechanism multiple times in parallel with different learned projections. This allows the model to attend 
+                    to information from different representation subspaces at different positions.
+                </p>
+
+                <ul>
+                    <li><strong>Parallel Processing:</strong> Each attention head operates independently and in parallel</li>
+                    <li><strong>Different Perspectives:</strong> Each head can learn to focus on different aspects of the relationships</li>
+                    <li><strong>Rich Representations:</strong> The concatenated outputs provide a richer representation than single attention</li>
+                    <li><strong>Computational Efficiency:</strong> Despite multiple heads, the total computational cost remains manageable</li>
+                </ul>
+
+                <h2>Positional Encoding: Adding Order to the Chaos</h2>
+
+                <p>
+                    Unlike recurrent neural networks that process sequences sequentially, transformers process all positions 
+                    simultaneously. This parallel processing is faster but loses positional information. To address this, 
+                    transformers add positional encodings to the input embeddings.
+                </p>
+
+                <p>
+                    The original paper used sinusoidal functions for positional encoding, which has interesting properties:
+                </p>
+
+                <ol>
+                    <li>It allows the model to extrapolate to sequence lengths longer than those seen during training</li>
+                    <li>The encoding is deterministic and requires no learning</li>
+                    <li>Relative positions can be expressed as linear functions of the encodings</li>
+                </ol>
+
+                <h2>The Encoder-Decoder Architecture</h2>
+
+                <p>
+                    The original transformer consists of an encoder and decoder, each composed of multiple identical layers. 
+                    The encoder processes the input sequence, while the decoder generates the output sequence one token at 
+                    a time, attending to both the encoder's output and its own previous outputs.
+                </p>
+
+                <h3>Feed-Forward Networks</h3>
+
+                <p>
+                    Each layer in both encoder and decoder includes a position-wise feed-forward network, applied identically 
+                    to each position. This typically consists of two linear transformations with a ReLU activation in between, 
+                    allowing the model to process information at each position independently.
+                </p>
+
+                <h2>Recent Advances and Variants</h2>
+
+                <p>
+                    Since the original transformer, numerous improvements and variants have emerged:
+                </p>
+
+                <ul>
+                    <li><strong>BERT:</strong> Uses only the encoder for bidirectional context understanding</li>
+                    <li><strong>GPT Series:</strong> Uses only the decoder for autoregressive language generation</li>
+                    <li><strong>Efficient Transformers:</strong> Variants like Linformer and Performer reduce complexity from O(n²) to O(n)</li>
+                    <li><strong>Vision Transformers:</strong> Adapt the architecture for image processing tasks</li>
+                    <li><strong>Multi-Query Attention:</strong> Shares keys and values across heads to reduce memory usage</li>
+                </ul>
+
+                <h2>Practical Considerations</h2>
+
+                <p>
+                    When implementing transformers for your own projects, consider these key factors:
+                </p>
+
+                <p>
+                    <strong>Memory Requirements:</strong> The quadratic complexity of self-attention can be prohibitive for very 
+                    long sequences. Consider using techniques like gradient checkpointing or attention variants for long sequences.
+                </p>
+
+                <p>
+                    <strong>Training Stability:</strong> Layer normalization and residual connections are crucial for training 
+                    deep transformers. The original paper places layer norm after the sub-layer, but pre-norm variants often 
+                    train more stably.
+                </p>
+
+                <p>
+                    <strong>Hyperparameters:</strong> Key hyperparameters include the number of layers, attention heads, hidden 
+                    dimensions, and dropout rates. These should be tuned based on your specific task and dataset size.
+                </p>
+
+                <h2>Conclusion</h2>
+
+                <p>
+                    Transformers have revolutionized natural language processing and continue to push boundaries in AI research. 
+                    Their ability to capture long-range dependencies, process sequences in parallel, and scale to massive datasets 
+                    has made them the architecture of choice for many modern applications.
+                </p>
+
+                <p>
+                    Understanding the fundamentals of transformers—from attention mechanisms to positional encoding—provides a 
+                    strong foundation for working with modern language models and exploring new applications of this powerful 
+                    architecture. As research continues, we can expect even more efficient and capable variants to emerge, 
+                    further expanding what's possible with deep learning.
+                </p>
+            </article>
+
+            <!-- Tags -->
+            <div class="post-tags">
+                <a href="#" class="post-tag">Transformers</a>
+                <a href="#" class="post-tag">Deep Learning</a>
+                <a href="#" class="post-tag">NLP</a>
+                <a href="#" class="post-tag">Attention Mechanism</a>
+                <a href="#" class="post-tag">Neural Networks</a>
+                <a href="#" class="post-tag">Machine Learning</a>
+            </div>
+
+            <!-- Author Box -->
+            <div class="post-author">
+                <img src="assets/Janith.jpg" alt="Janith Ramanayake" class="author-image">
+                <div class="author-info">
+                    <h3>Janith Ramanayake</h3>
+                    <p>
+                        PhD Research Student specializing in Artificial Intelligence and Statistics. Passionate about 
+                        advancing machine learning methodologies and making complex concepts accessible to the research community.
+                    </p>
+                    <div class="author-social">
+                        <a href="#">Twitter</a>
+                        <a href="#">LinkedIn</a>
+                        <a href="#">Google Scholar</a>
+                        <a href="#">GitHub</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Related Posts -->
+            <div class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-posts-grid">
+                    <div class="related-post-card">
+                        <img src="assets/hero.jpg" alt="Related Post" class="related-post-image">
+                        <div class="related-post-content">
+                            <h3><a href="#">Attention Mechanisms Explained: From Basics to Advanced</a></h3>
+                            <p class="related-post-meta">Sep 20, 2025 • 6 min read</p>
+                        </div>
+                    </div>
+                    <div class="related-post-card">
+                        <img src="assets/project1.jpg" alt="Related Post" class="related-post-image">
+                        <div class="related-post-content">
+                            <h3><a href="#">Building Your First Transformer Model from Scratch</a></h3>
+                            <p class="related-post-meta">Sep 15, 2025 • 10 min read</p>
+                        </div>
+                    </div>
+                    <div class="related-post-card">
+                        <img src="assets/project3.jpg" alt="Related Post" class="related-post-image">
+                        <div class="related-post-content">
+                            <h3><a href="#">BERT vs GPT: Understanding the Key Differences</a></h3>
+                            <p class="related-post-meta">Sep 10, 2025 • 7 min read</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Janith Ramanayake. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Hamburger menu
+        const hamburger = document.getElementById('hamburger');
+        const navMenu = document.getElementById('nav-menu');
+
+        hamburger.addEventListener('click', function() {
+            hamburger.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
+
+        // Close menu when clicking nav links
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                navMenu.classList.remove('active');
+            });
+        });
+    </script>
+</body>
+</html>
